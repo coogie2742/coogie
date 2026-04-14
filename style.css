@@ -222,6 +222,22 @@ h3 {
     opacity: 0.8;
 }
 
+.comment-section {
+    margin-top: 4rem;
+    width: 100%;
+}
+
+.comment-divider {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
+    margin-bottom: 3rem;
+}
+
+body.dark-mode .comment-divider {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+}
+
 @media (max-width: 1024px) {
     .main-content {
         flex-direction: column;
