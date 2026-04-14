@@ -24,8 +24,7 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', theme);
 });
 
-generateBtn.addEventListener('click', () => {
-    numbersContainer.innerHTML = '';
+function generateGame() {
     const numbers = new Set();
     while(numbers.size < 6) {
         const randomNumber = Math.floor(Math.random() * 45) + 1;
@@ -34,10 +33,43 @@ generateBtn.addEventListener('click', () => {
     
     const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
     
-    for (const number of sortedNumbers) {
-        const numberEl = document.createElement('div');
-        numberEl.classList.add('number');
-        numberEl.textContent = number;
-        numbersContainer.appendChild(numberEl);
+    // Generate Bonus Number
+    let bonusNumber;
+    do {
+        bonusNumber = Math.floor(Math.random() * 45) + 1;
+    } while (numbers.has(bonusNumber));
+    
+    return { main: sortedNumbers, bonus: bonusNumber };
+}
+
+generateBtn.addEventListener('click', () => {
+    numbersContainer.innerHTML = '';
+    
+    for (let i = 0; i < 5; i++) {
+        const gameData = generateGame();
+        const rowEl = document.createElement('div');
+        rowEl.classList.add('game-row');
+        
+        // Main Numbers
+        gameData.main.forEach(num => {
+            const numEl = document.createElement('div');
+            numEl.classList.add('number');
+            numEl.textContent = num;
+            rowEl.appendChild(numEl);
+        });
+        
+        // Plus sign
+        const plusEl = document.createElement('div');
+        plusEl.classList.add('plus-sign');
+        plusEl.textContent = '+';
+        rowEl.appendChild(plusEl);
+        
+        // Bonus Number
+        const bonusEl = document.createElement('div');
+        bonusEl.classList.add('number', 'bonus');
+        bonusEl.textContent = gameData.bonus;
+        rowEl.appendChild(bonusEl);
+        
+        numbersContainer.appendChild(rowEl);
     }
 });
